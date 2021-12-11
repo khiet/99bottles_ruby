@@ -1,55 +1,34 @@
 class Bottles
-  def verse(count)
-    "#{current_bottle(count)} of beer on the wall, " +
-      "#{current_bottle(count, lowercase: true)} of beer.\n" +
-      action(count) +
-      "#{next_bottle(count)} of beer on the wall.\n"
-  end
-
-  def verses(*counts)
-    counts[0].downto(counts[1]).map do |count|
-      verse(count)
-    end.join("\n")
-  end
-
   def song
     verses(99, 0)
   end
 
-  def current_bottle(count, lowercase: false)
-    word = count == 1 ? 'bottle' : 'bottles'
-    "#{count} #{word}"
-
-    case count
-    when 1
-      '1 bottle'
-    when 0
-      lowercase ? 'no more bottles' : 'No more bottles'
-    else
-      "#{count} bottles"
-    end
+  def verses(starting, ending)
+    starting.downto(ending).map { |i| verse(i) }.join("\n")
   end
 
-  def action(count)
-    case count
-    when 1
-      'Take it down and pass it around, '
+  def verse(number)
+    case number
     when 0
-      'Go to the store and buy some more, '
-    else
-      'Take one down and pass it around, '
-    end
-  end
-
-  def next_bottle(count)
-    next_count = count.zero? ? 99 : count - 1
-    case next_count
+      'No more bottles of beer on the wall, ' +
+        "no more bottles of beer.\n" +
+        'Go to the store and buy some more, ' +
+        "99 bottles of beer on the wall.\n"
     when 1
-      '1 bottle'
-    when 0
-      'no more bottles'
+      '1 bottle of beer on the wall, ' +
+        "1 bottle of beer.\n" +
+        'Take it down and pass it around, ' +
+        "no more bottles of beer on the wall.\n"
+    when 2
+      '2 bottles of beer on the wall, ' +
+        "2 bottles of beer.\n" +
+        'Take one down and pass it around, ' +
+        "1 bottle of beer on the wall.\n"
     else
-      "#{next_count} bottles"
+      "#{number} bottles of beer on the wall, " +
+        "#{number} bottles of beer.\n" +
+        'Take one down and pass it around, ' +
+        "#{number - 1} bottles of beer on the wall.\n"
     end
   end
 end
